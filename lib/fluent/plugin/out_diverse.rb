@@ -19,17 +19,18 @@ module Fluent
       super
       conf.elements.select {|e|
         e.name == 'major'
-      }.first {|e|
+      }.each {|e|
         @major = output(e)
       }
       conf.elements.select {|e|
         e.name == 'minor'
-      }.first {|e|
+      }.each {|e|
         @minor = output(e)
+        puts @minor
       }
     end
 
-    def output(elem)
+    def output(e)
       type = e['@type']
       unless type
         raise ConfigError, "Missing 'type' parameter on <major> or <minor> directive"
@@ -39,6 +40,7 @@ module Fluent
       output = Plugin.new_output(type)
       output.router = router
       output.configure(e)
+      output
     end
 
     def start
