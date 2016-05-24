@@ -43,17 +43,13 @@ module Fluent
 
     def start
       super
-
-      @outputs.each do |o|
-        o.start unless o.started?
-      end
+      @major.start unless @major.started?
+      @minor.start unless @minor.started?
     end
 
     def shutdown
-      @outputs.each do |o|
-        o.shutdown unless o.shutdown?
-      end
-
+      @major.shutdown unless @mejor.shutdown?
+      @minor.shutdown unless @minor.shutdown?
       super
     end
 
