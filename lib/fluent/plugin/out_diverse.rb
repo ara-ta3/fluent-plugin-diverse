@@ -26,7 +26,6 @@ module Fluent
         e.name == 'minor'
       }.each {|e|
         @minor = output(e)
-        puts @minor
       }
     end
 
@@ -45,13 +44,13 @@ module Fluent
 
     def start
       super
-      @major.start unless @major.started?
-      @minor.start unless @minor.started?
+      @major.start if @major
+      @minor.start if @minor
     end
 
     def shutdown
-      @major.shutdown unless @mejor.shutdown?
-      @minor.shutdown unless @minor.shutdown?
+      @major.shutdown if @mejor
+      @minor.shutdown if @minor
       super
     end
 
