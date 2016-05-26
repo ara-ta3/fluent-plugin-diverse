@@ -33,16 +33,11 @@ class DiverseOutputTest < Test::Unit::TestCase
       d = create_driver(config)
 
       d.run do
-        d.emit({'foo' => 'bar'}, @time)
+        d.instance.router.emit(@tag, @time, {'foo' => 'bar'})
       end
 
       assert_equal(d.instance.minor_rate, 0.03)
-
-      puts d.records
-      puts d.events
-      puts d.emits
-      tag, time, record = d.emits.first
-      assert_equal(@tag, tag)
+      assert_equal(d.emits, [[@tag, @time, {'foo' => 'bar'}]])
     end
 
   end
